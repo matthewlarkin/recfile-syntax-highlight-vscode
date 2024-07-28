@@ -1,0 +1,263 @@
+{
+	"scopeName": "text.recfile",
+	"patterns": [
+	  {
+		"match": "#.+",
+		"name": "comment.recfile"
+	  },
+	  {
+		"match": "(%)(mandatory|unique|auto|sort|prohibit|allowed|key|encrypted|confidential): (.+)",
+		"captures": {
+		  "1": {
+			"name": "constant.numeric.rec-config.recfile"
+		  },
+		  "2": {
+			"name": "keyword.record-set-property.recfile"
+		  },
+		  "3": {
+			"name": "entity.name.function.field-name.recfile"
+		  }
+		}
+	  },
+	  {
+		"match": "(%)(rec): (\\w+)( .+)?",
+		"captures": {
+		  "1": {
+			"name": "constant.numeric.rec-config.recfile"
+		  },
+		  "2": {
+			"name": "keyword.record-type.recfile"
+		  },
+		  "3": {
+			"name": "constant.language.record-type-name.recfile"
+		  },
+		  "4": {
+			"name": "comment.rec-type-link.recfile"
+		  }
+		}
+	  },
+	  {
+		"match": "(%)(typedef): (\\w+) ",
+		"captures": {
+		  "1": {
+			"name": "constant.numeric.rec-config.recfile"
+		  },
+		  "2": {
+			"name": "keyword.type-def-keyword.recfile"
+		  },
+		  "3": {
+			"name": "variable.function.custom-type.recfile"
+		  }
+		},
+		"push": "typedef"
+	  },
+	  {
+		"match": "(%)(type): ([\\w,]+) ",
+		"captures": {
+		  "1": {
+			"name": "constant.numeric.rec-config.recfile"
+		  },
+		  "2": {
+			"name": "keyword.type-keyword.recfile"
+		  },
+		  "3": {
+			"name": "entity.name.function.field-name.recfile"
+		  }
+		},
+		"push": "typedef"
+	  },
+	  {
+		"match": "(%)(doc): ",
+		"captures": {
+		  "1": {
+			"name": "constant.numeric.rec-config.recfile"
+		  },
+		  "2": {
+			"name": "keyword.doc-keyword.recfile"
+		  }
+		},
+		"push": "documentation"
+	  },
+	  {
+		"match": "(%)(size): ([<>=]+)?( )?((0x)?[\\dA-F]+)",
+		"captures": {
+		  "1": {
+			"name": "constant.numeric.rec-config.recfile"
+		  },
+		  "2": {
+			"name": "keyword.size-keyword.recfile"
+		  },
+		  "3": {
+			"name": "constant.language.size-restriction.recfile"
+		  },
+		  "5": {
+			"name": "constant.numeric.size-value.recfile"
+		  }
+		}
+	  },
+	  {
+		"match": "^(\\w+):",
+		"name": "entity.name.function.custom-type.recfile"
+	  },
+	{
+		"match": "^(\\+ ).*",
+		"captures": {
+			"1": {
+				"name": "comment.recfile"
+			}
+		}
+	},
+	  {
+		"match": ".*",
+		"name": "main.recfile"
+	  }
+	],
+	"repository": {
+	  "documentation": {
+		"patterns": [
+		  {
+			"match": "(\\+ )([\\w ]+)",
+			"captures": {
+			  "1": {
+				"name": "comment.recfile"
+			  },
+			  "2": {
+				"name": "string.documentation.recfile"
+			  }
+			}
+		  },
+		  {
+			"match": "[\\w ]+",
+			"name": "string.documentation.recfile"
+		  },
+		  {
+			"match": "^(?!\\+ )",
+			"name": "main"
+		  }
+		]
+	  },
+	  "typedef": {
+		"patterns": [
+		  {
+			"match": "(int\\b|real\\b|bool\\b|line\\b|date\\b|uuid\\b)",
+			"name": "storage.type.recfile",
+			"pop": true
+		  },
+		  {
+			"match": "(size) (0x[\\dA-F]+|\\d+)",
+			"captures": {
+			  "1": {
+				"name": "storage.type.recfile"
+			  },
+			  "2": {
+				"name": "constant.numeric.recfile"
+			  }
+			},
+			"pop": true
+		  },
+		  {
+			"match": "(range\\b)",
+			"captures": {
+			  "1": {
+				"name": "storage.type.recfile"
+			  }
+			},
+			"push": "range"
+		  },
+		  {
+			"match": "(enum\\b)",
+			"captures": {
+			  "1": {
+				"name": "storage.type.enum-keyword.recfile"
+			  }
+			},
+			"push": "enum"
+		  },
+		  {
+			"match": "(regexp) .(.+).",
+			"captures": {
+			  "1": {
+				"name": "storage.type.recfile"
+			  },
+			  "2": {
+				"name": "string.recfile"
+			  }
+			},
+			"pop": true
+		  },
+		  {
+			"match": "\\w+",
+			"name": "variable.function.recfile",
+			"pop": true
+		  },
+		  {
+			"match": ".+",
+			"name": "string.recfile",
+			"pop": true
+		  }
+		]
+	  },
+	  "range": {
+		"patterns": [
+		  {
+			"match": " (MIN|-?0x[\\dA-F]+|-?\\d+)( )?(MAX|-?0x[\\dA-F]+|-?\\d+)?",
+			"captures": {
+			  "1": {
+				"name": "constant.numeric.recfile"
+			  },
+			  "3": {
+				"name": "constant.numeric.recfile"
+			  }
+			},
+			"name": "main"
+		  },
+		  {
+			"match": ".*",
+			"name": "main"
+		  }
+		]
+	  },
+	  "enum": {
+		"patterns": [
+		  {
+			"match": "(\\+ )([\\w ]+)",
+			"captures": {
+			  "1": {
+				"name": "comment.recfile"
+			  },
+			  "2": {
+				"name": "string.enum-content.recfile"
+			  }
+			}
+		  },
+		  {
+			"match": "[\\w ]+",
+			"name": "string.enum-content.recfile"
+		  },
+		  {
+			"match": "\\(",
+			"name": "comment.recfile",
+			"push": "inline-comment"
+		  },
+		  {
+			"match": "^(?!\\+ )",
+			"name": "main"
+		  }
+		]
+	  },
+	  "inline-comment": {
+		"patterns": [
+		  {
+			"match": "[^\\)]*",
+			"name": "comment.recfile"
+		  },
+		  {
+			"match": "\\)",
+			"name": "comment.recfile",
+			"pop": true
+		  }
+		]
+	  }
+	}
+  }
+  
