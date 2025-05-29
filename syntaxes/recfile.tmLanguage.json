@@ -6,7 +6,7 @@
 		"name": "comment.recfile"
 	  },
 	  {
-		"match": "(%)(mandatory|unique|auto|sort|type|prohibit|allowed|key|encrypted|confidential): (.+)",
+		"match": "(%)(mandatory|unique|auto|singular|sort|type|prohibit|allowed|key|encrypted|confidential): (.+)",
 		"captures": {
 		  "1": {
 			"name": "constant.numeric.rec-config.recfile"

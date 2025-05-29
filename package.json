@@ -2,13 +2,13 @@
 	"name": "recfile-syntax",
 	"displayName": "Recfile Syntax Highlighting",
 	"description": "Syntax highlighting for Recfiles",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "your-publisher-name",
 	"engines": {
 	  "vscode": "^1.56.0"
 	},
 	"categories": [
-	  "Languages"
+	  "Programming Languages"
 	],
 	"contributes": {
 	  "languages": [
